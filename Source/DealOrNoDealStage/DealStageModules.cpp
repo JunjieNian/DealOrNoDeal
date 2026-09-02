@@ -123,6 +123,7 @@ AStageWorldShellModule::AStageWorldShellModule()
     DealStageVisuals::SetupText(ScaleLegend, ModuleRoot,
         TEXT("GRAYBOX CORE: 24m WIDE x 18m DEEP | 1 UU = 1 cm"),
         FVector(-800.0f, -920.0f, 20.0f), 34.0f, FLinearColor(0.35f, 0.55f, 0.8f));
+    ScaleLegend->SetVisibility(false);
 }
 
 void AStageWorldShellModule::OnConstruction(const FTransform& Transform)
@@ -160,6 +161,7 @@ AStagePlatformModule::AStagePlatformModule()
     TableLabel = CreateDefaultSubobject<UTextRenderComponent>(TEXT("GameTable_Label"));
     DealStageVisuals::SetupText(TableLabel, ModuleRoot, TEXT("GAME TABLE / PHONE"),
         FVector(-112.0f, 0.0f, 188.0f), 14.0f, FLinearColor(0.1f, 0.85f, 1.0f));
+    TableLabel->SetVisibility(false);
 }
 
 void AStagePlatformModule::OnConstruction(const FTransform& Transform)
@@ -185,7 +187,7 @@ AStageStaircaseModule::AStageStaircaseModule()
             *FString::Printf(TEXT("Tier_%d_%dPositions"), Row + 1, RowCounts[Row]));
         DealStageVisuals::SetupMesh(Tier, DealStageVisuals::Cube(), ModuleRoot,
             FVector(TierX[Row], 0.0f, TierTopHeights[Row] * 0.5f),
-            FVector(1.35f, 5.35f, TierTopHeights[Row] / 100.0f), true);
+            FVector(2.10f, 6.10f, TierTopHeights[Row] / 100.0f), true);
         StairTiers.Add(Tier);
 
         const float Spacing = 145.0f;
@@ -410,6 +412,7 @@ AStageBackdropModule::AStageBackdropModule()
     BackdropLabel = CreateDefaultSubobject<UTextRenderComponent>(TEXT("CityBackdrop_Label"));
     DealStageVisuals::SetupText(BackdropLabel, ModuleRoot, TEXT("CULVER CITY NIGHT BACKDROP"),
         FVector(-90.0f, 0.0f, 640.0f), 34.0f, FLinearColor(0.15f, 0.78f, 1.0f));
+    BackdropLabel->SetVisibility(false);
 }
 
 void AStageBackdropModule::OnConstruction(const FTransform& Transform)
@@ -463,6 +466,7 @@ AStageBankerBoothModule::AStageBankerBoothModule()
     BoothLabel = CreateDefaultSubobject<UTextRenderComponent>(TEXT("BankerBooth_Label"));
     DealStageVisuals::SetupText(BoothLabel, ModuleRoot, TEXT("THE BANKER\nHIGH BOOTH"),
         FVector(-168.0f, 0.0f, 645.0f), 31.0f, FLinearColor(0.95f, 0.12f, 0.08f));
+    BoothLabel->SetVisibility(false);
 }
 
 void AStageBankerBoothModule::OnConstruction(const FTransform& Transform)
@@ -541,6 +545,7 @@ AStageAudienceModule::AStageAudienceModule()
         TEXT("BROKEN U-SHAPE AUDIENCE | GRAYBOX ~200 OF REPORTED ~360 SEATS"),
         FVector(-1090.0f, 0.0f, 205.0f), 31.0f, FLinearColor(0.65f, 0.65f, 0.7f),
         FRotator(0.0f, 0.0f, 0.0f));
+    AudienceLabel->SetVisibility(false);
 }
 
 void AStageAudienceModule::OnConstruction(const FTransform& Transform)
@@ -656,13 +661,14 @@ void AStageLightingModule::ApplyLightingCue(FName CueName)
         }
 
         const float BaseIntensity = Index == 0 ? 1.6f : (Index <= 5 ? 1850.0f : (Index <= 9 ? 7000.0f : 9000.0f));
-        const float CueMultiplier = bBankerCue ? 0.72f : (bDealCue ? 1.18f : (bNoDealCue ? 1.04f : 1.0f));
+        const float CueMultiplier = bBankerCue ? 0.92f : (bDealCue ? 1.18f : (bNoDealCue ? 1.04f : 1.0f));
         Light->SetIntensity(BaseIntensity * CueMultiplier);
         if (bBankerCue)
         {
-            Light->SetLightColor(Index == 0
-                ? FLinearColor(0.22f, 0.035f, 0.025f)
-                : FLinearColor(0.80f, 0.045f, 0.025f));
+            const bool bKeepBoardReadable = Index == 0 || Index == 5;
+            Light->SetLightColor(bKeepBoardReadable
+                ? DefaultColors[Index]
+                : FLinearColor(0.88f, 0.12f, 0.055f));
         }
         else if (bDealCue)
         {
@@ -695,16 +701,16 @@ AStageCameraRig::AStageCameraRig()
         FVector(-2350.0f, 0.0f, 1050.0f),
         FVector(-760.0f, 360.0f, 310.0f),
         FVector(-430.0f, -670.0f, 390.0f),
-        FVector(-430.0f, 920.0f, 410.0f)
+        FVector(-500.0f, 0.0f, 500.0f)
     };
     static const FVector CameraTargets[4] =
     {
         FVector(300.0f, 0.0f, 255.0f),
         FVector(-80.0f, 0.0f, 120.0f),
         FVector(490.0f, 0.0f, 230.0f),
-        FVector(430.0f, 740.0f, 350.0f)
+        FVector(420.0f, 760.0f, 350.0f)
     };
-    static const float CameraFov[4] = { 69.0f, 52.0f, 47.0f, 42.0f };
+    static const float CameraFov[4] = { 69.0f, 52.0f, 47.0f, 80.0f };
 
     for (int32 Index = 0; Index < 4; ++Index)
     {
@@ -724,6 +730,7 @@ AStageCameraRig::AStageCameraRig()
             CameraLocations[Index] + FVector(0.0f, 0.0f, 45.0f), 24.0f,
             FLinearColor(0.25f, 1.0f, 0.35f),
             (FVector::ZeroVector - CameraLocations[Index]).Rotation());
+        Marker->SetVisibility(false);
         CameraMarkers.Add(Marker);
     }
 }
@@ -779,12 +786,30 @@ void AStageInteractionDirector::BeginPlay()
             GamePhase == EDealGamePhase::BankerOffer ? TEXT("true") : TEXT("false"),
             *GetBankerOfferText());
     }
+    else if (FParse::Param(FCommandLine::Get(), TEXT("DealRevealPreview")))
+    {
+        ConfirmSelection();
+        ConfirmSelection();
+        UE_LOG(LogTemp, Display, TEXT("[DealGameRevealPreview] Ready=%s Case=%d Amount=%s"),
+            GamePhase == EDealGamePhase::RevealAmount ? TEXT("true") : TEXT("false"),
+            LastOpenedBriefcase, *GetLastRevealedAmountText());
+    }
 
     if (FParse::Param(FCommandLine::Get(), TEXT("DealCapturePreview")))
     {
-        const FString PreviewName = GamePhase == EDealGamePhase::BankerOffer
-            ? TEXT("DealGame-BankerOffer.png")
-            : TEXT("DealGame-ChooseCase.png");
+        FString PreviewName = TEXT("DealGame-ChooseCase.png");
+        if (GamePhase == EDealGamePhase::BankerOffer)
+        {
+            PreviewName = TEXT("DealGame-BankerOffer.png");
+        }
+        else if (GamePhase == EDealGamePhase::RevealAmount)
+        {
+            PreviewName = TEXT("DealGame-RevealedAmount.png");
+        }
+        else if (FParse::Param(FCommandLine::Get(), TEXT("DealCamera4Preview")))
+        {
+            PreviewName = TEXT("DealGame-Camera4.png");
+        }
         const FString PreviewPath = FPaths::Combine(FPaths::ProjectSavedDir(), TEXT("Screenshots/WindowsEditor"), PreviewName);
         GetWorldTimerManager().SetTimer(PreviewCaptureTimer, FTimerDelegate::CreateWeakLambda(this, [PreviewPath]()
         {
@@ -796,6 +821,7 @@ void AStageInteractionDirector::BeginPlay()
 
 void AStageInteractionDirector::InitializeGame()
 {
+    GetWorldTimerManager().ClearTimer(CaseRevealTimer);
     Briefcases.Reset();
     for (int32 Number = 1; Number <= 26; ++Number)
     {
@@ -814,6 +840,7 @@ void AStageInteractionDirector::InitializeGame()
     AcceptedOffer = 0;
     LastOpenedBriefcase = INDEX_NONE;
     LastRevealedAmount = 0;
+    RevealStartedAtSeconds = 0.0f;
     LastMessage = TEXT("Choose the briefcase you want to keep until the end.");
     ResultHeadline.Empty();
     ResultDetail.Empty();
@@ -952,14 +979,43 @@ void AStageInteractionDirector::OpenHighlightedCase()
     UE_LOG(LogTemp, Display, TEXT("[DealGame] Opened case #%d: %s"),
         State.BriefcaseNumber, *FormatCurrency(State.AmountCents));
 
+    GamePhase = EDealGamePhase::RevealAmount;
+    RevealStartedAtSeconds = GetWorld() ? GetWorld()->GetTimeSeconds() : 0.0f;
+    RefreshStageVisuals();
+    FocusCamera(3);
+
+    const bool bSkipRevealDelay =
+        FParse::Param(FCommandLine::Get(), TEXT("DealAutoTest")) ||
+        FParse::Param(FCommandLine::Get(), TEXT("DealAutoAcceptTest")) ||
+        FParse::Param(FCommandLine::Get(), TEXT("DealOfferPreview"));
+    if (bSkipRevealDelay)
+    {
+        CompleteCaseReveal();
+    }
+    else
+    {
+        GetWorldTimerManager().SetTimer(CaseRevealTimer, this,
+            &AStageInteractionDirector::CompleteCaseReveal, CaseRevealDurationSeconds, false);
+    }
+}
+
+void AStageInteractionDirector::CompleteCaseReveal()
+{
+    if (GamePhase != EDealGamePhase::RevealAmount)
+    {
+        return;
+    }
+    GetWorldTimerManager().ClearTimer(CaseRevealTimer);
     if (CasesOpenedThisRound >= GetCasesToOpenThisRound() || GetCasesRemaining() <= 2)
     {
         BeginBankerOffer();
     }
     else
     {
+        GamePhase = EDealGamePhase::OpenCases;
         HighlightedBriefcase = FindNextAvailableCase(HighlightedBriefcase, 1);
         RefreshStageVisuals();
+        FocusCamera(2);
     }
 }
 
@@ -969,7 +1025,7 @@ void AStageInteractionDirector::BeginBankerOffer()
     GamePhase = EDealGamePhase::BankerOffer;
     LastMessage = FString::Printf(TEXT("THE BANKER OFFERS %s"), *FormatCurrency(BankerOffer));
     TriggerLightingCue(TEXT("Banker"));
-    FocusCamera(1);
+    FocusCamera(3);
     RefreshStageVisuals();
     UE_LOG(LogTemp, Display, TEXT("[DealGame] Banker offer %d: %s with %d cases remaining"),
         RoundIndex + 1, *FormatCurrency(BankerOffer), GetCasesRemaining());
@@ -1111,6 +1167,7 @@ FString AStageInteractionDirector::GetPhaseTitle() const
     {
         case EDealGamePhase::ChoosePlayerCase: return TEXT("CHOOSE YOUR CASE");
         case EDealGamePhase::OpenCases: return FString::Printf(TEXT("ROUND %d - OPEN CASES"), RoundIndex + 1);
+        case EDealGamePhase::RevealAmount: return TEXT("CASE REVEALED");
         case EDealGamePhase::BankerOffer: return TEXT("THE BANKER IS CALLING");
         case EDealGamePhase::GameOver: return ResultHeadline;
         default: return TEXT("DEAL OR NO DEAL");
@@ -1126,6 +1183,8 @@ FString AStageInteractionDirector::GetInstructionText() const
         case EDealGamePhase::OpenCases:
             return FString::Printf(TEXT("CLICK A CASE TO OPEN IT     %d OF %d OPENED THIS ROUND"),
                 CasesOpenedThisRound, GetCasesToOpenThisRound());
+        case EDealGamePhase::RevealAmount:
+            return TEXT("AMOUNT REMOVED FROM THE BOARD");
         case EDealGamePhase::BankerOffer:
             return TEXT("CLICK DEAL OR NO DEAL     KEYBOARD: D / N");
         case EDealGamePhase::GameOver:
@@ -1149,6 +1208,11 @@ FString AStageInteractionDirector::GetPlayerCaseValueText() const
     return GamePhase == EDealGamePhase::GameOver
         ? FormatCurrency(Briefcases[PlayerBriefcase - 1].AmountCents)
         : TEXT("SEALED");
+}
+
+float AStageInteractionDirector::GetRevealElapsedSeconds() const
+{
+    return GetWorld() ? FMath::Max(0.0f, GetWorld()->GetTimeSeconds() - RevealStartedAtSeconds) : 0.0f;
 }
 
 FString AStageInteractionDirector::FormatCurrency(int64 AmountCents)
@@ -1465,6 +1529,7 @@ void ADealStagePlayerController::SwitchToCamera(int32 CameraIndex)
         Rig->ActivateCamera(CameraIndex);
         SetViewTargetWithBlend(Rig, 0.45f, EViewTargetBlendFunction::VTBlend_Cubic);
     }
+
 }
 
 void ADealStagePlayerController::Camera1() { SwitchToCamera(0); }
@@ -1562,19 +1627,39 @@ void ADealStageHUD::DrawHUD()
         Director->GetGamePhase() == EDealGamePhase::OpenCases)
     {
         const FString SelectionText = FString::Printf(TEXT("SELECTED CASE  #%d"), Director->GetHighlightedBriefcase());
-        DrawRect(FLinearColor(0.02f, 0.12f, 0.24f, 0.82f), Width * 0.5f - 185.0f, 126.0f, 370.0f, 58.0f);
-        DrawCentered(SelectionText, 139.0f, LargeFont, 0.92f, Gold);
+        DrawCentered(SelectionText, 48.0f, MediumFont, 0.76f, Gold);
+    }
+    else if (Director->GetGamePhase() == EDealGamePhase::RevealAmount)
+    {
+        const float Elapsed = Director->GetRevealElapsedSeconds();
+        const float Intro = FMath::Clamp(Elapsed / 0.24f, 0.0f, 1.0f);
+        const float Fade = Elapsed > 2.25f ? FMath::Clamp((2.8f - Elapsed) / 0.55f, 0.0f, 1.0f) : 1.0f;
+        const float Pulse = 1.0f + 0.035f * FMath::Sin(Elapsed * 8.0f);
+        const float CardWidth = 540.0f * (0.84f + 0.16f * Intro);
+        const float CardHeight = 196.0f * (0.84f + 0.16f * Intro);
+        const float CardX = (Width - CardWidth) * 0.5f;
+        const float CardY = Height * 0.36f - (CardHeight - 196.0f) * 0.5f;
+        DrawRect(FLinearColor(0.015f, 0.045f, 0.085f, 0.94f * Fade), CardX, CardY, CardWidth, CardHeight);
+        DrawRect(FLinearColor(0.05f, 0.62f, 0.90f, 0.95f * Fade), CardX, CardY, CardWidth, 7.0f);
+        const FString CaseText = FString::Printf(TEXT("CASE #%d CONTAINED"), Director->GetLastOpenedBriefcase());
+        DrawCentered(CaseText, CardY + 30.0f, LargeFont, 0.94f * Intro, FLinearColor(0.9f, 0.96f, 1.0f, Fade));
+        DrawCentered(Director->GetLastRevealedAmountText(), CardY + 88.0f, LargeFont,
+            1.72f * Intro * Pulse, FLinearColor(1.0f, 0.72f, 0.08f, Fade));
+        DrawCentered(TEXT("REMOVED FROM THE BOARD"), CardY + 157.0f, MediumFont,
+            0.72f * Intro, FLinearColor(0.28f, 0.84f, 1.0f, Fade));
     }
     else if (Director->GetGamePhase() == EDealGamePhase::BankerOffer)
     {
-        DrawRect(FLinearColor(0.20f, 0.008f, 0.012f, 0.94f), Width * 0.5f - 330.0f, Height * 0.27f, 660.0f, 285.0f);
-        DrawCentered(TEXT("THE BANKER OFFERS"), Height * 0.27f + 24.0f, LargeFont, 1.05f, White);
-        DrawCentered(Director->GetBankerOfferText(), Height * 0.27f + 78.0f, LargeFont, 1.65f, Gold);
-        const FVector2D DealButtonPos(Width * 0.5f - 280.0f, Height * 0.27f + 180.0f);
-        const FVector2D NoDealButtonPos(Width * 0.5f + 20.0f, Height * 0.27f + 180.0f);
-        DrawButton(TEXT("DEAL  [D]"), DealButtonPos, FVector2D(260.0f, 66.0f), LargeFont, 0.88f,
+        const float PanelX = FMath::Max(28.0f, Width * 0.035f);
+        const float PanelY = Height * 0.19f;
+        DrawRect(FLinearColor(0.20f, 0.008f, 0.012f, 0.92f), PanelX, PanelY, 430.0f, 226.0f);
+        DrawText(TEXT("THE BANKER OFFERS"), White, PanelX + 30.0f, PanelY + 24.0f, LargeFont, 0.86f, false);
+        DrawText(Director->GetBankerOfferText(), Gold, PanelX + 30.0f, PanelY + 76.0f, LargeFont, 1.38f, false);
+        const FVector2D DealButtonPos(PanelX + 24.0f, PanelY + 148.0f);
+        const FVector2D NoDealButtonPos(PanelX + 224.0f, PanelY + 148.0f);
+        DrawButton(TEXT("DEAL  [D]"), DealButtonPos, FVector2D(182.0f, 55.0f), LargeFont, 0.72f,
             FLinearColor(0.03f, 0.43f, 0.22f, 0.98f), White, TEXT("DealButton"));
-        DrawButton(TEXT("NO DEAL  [N]"), NoDealButtonPos, FVector2D(260.0f, 66.0f), LargeFont, 0.88f,
+        DrawButton(TEXT("NO DEAL  [N]"), NoDealButtonPos, FVector2D(182.0f, 55.0f), LargeFont, 0.72f,
             FLinearColor(0.58f, 0.035f, 0.045f, 0.98f), White, TEXT("NoDealButton"));
     }
     else if (Director->GetGamePhase() == EDealGamePhase::GameOver)

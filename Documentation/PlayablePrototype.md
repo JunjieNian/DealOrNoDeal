@@ -1,8 +1,8 @@
-# Playable Prototype 0.2
+# Playable Prototype 0.3
 
 Local standalone Windows builds are generated at:
 
-`Builds/DealOrNoDealStage-Prototype-0.2/Windows`
+`Builds/DealOrNoDealStage-Prototype-0.3/Windows`
 
 Launch `DealOrNoDealStage.exe`. The folder is portable and must be copied as a
 whole because the launcher depends on the adjacent `DealOrNoDealStage`, `Engine`,
@@ -17,7 +17,10 @@ BuildCookRun pipeline, or distribute the separately archived portable build.
 - Complete choose/open/offer/deal-or-no-deal/final-reveal/restart loop.
 - Clickable Deal, No Deal, and Play Again HUD buttons.
 - Physical amount-board elimination and case visibility state.
+- A 2.8-second center-screen reveal card before play or the Banker offer resumes.
+- Compact Banker-offer controls that keep the amount board available for review.
 - Phase-driven camera and lighting cues.
+- Widened case tiers and hidden graybox labels/camera markers for a clean stage view.
 - No rendered host, models, contestants, or audience people.
 - Cooked and packaged Win64 build that runs without Unreal Editor.
 

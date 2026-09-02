@@ -21,6 +21,7 @@ enum class EDealGamePhase : uint8
 {
     ChoosePlayerCase UMETA(DisplayName="Choose Player Case"),
     OpenCases UMETA(DisplayName="Open Cases"),
+    RevealAmount UMETA(DisplayName="Reveal Amount"),
     BankerOffer UMETA(DisplayName="Banker Offer"),
     GameOver UMETA(DisplayName="Game Over")
 };
@@ -348,6 +349,15 @@ public:
     UFUNCTION(BlueprintPure, Category="Deal Stage|Gameplay")
     FString GetPlayerCaseValueText() const;
 
+    UFUNCTION(BlueprintPure, Category="Deal Stage|Gameplay")
+    int32 GetLastOpenedBriefcase() const { return LastOpenedBriefcase; }
+
+    UFUNCTION(BlueprintPure, Category="Deal Stage|Gameplay")
+    FString GetLastRevealedAmountText() const { return FormatCurrency(LastRevealedAmount); }
+
+    UFUNCTION(BlueprintPure, Category="Deal Stage|Gameplay")
+    float GetRevealElapsedSeconds() const;
+
     static FString FormatCurrency(int64 AmountCents);
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Deal Stage|Interaction")
@@ -375,6 +385,7 @@ private:
     void InitializeGame();
     void AssignPrizeValues();
     void OpenHighlightedCase();
+    void CompleteCaseReveal();
     void BeginBankerOffer();
     void RevealFinalCase(bool bAcceptedDeal);
     void RefreshStageVisuals();
@@ -405,6 +416,9 @@ private:
     TArray<int32> CasesPerRound;
     TArray<int64> PrizeValuesCents;
     FTimerHandle PreviewCaptureTimer;
+    FTimerHandle CaseRevealTimer;
+    float RevealStartedAtSeconds = 0.0f;
+    static constexpr float CaseRevealDurationSeconds = 2.8f;
 };
 
 UCLASS(Blueprintable)
