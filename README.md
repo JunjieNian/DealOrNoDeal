@@ -5,6 +5,8 @@ This project is a modular graybox reconstruction of the classic 2006–2008 NBC
 relationships, readable module boundaries, a playable camera setup, and stable
 interaction seams over final art.
 
+![Perspective toward the stage](overview.png)
+
 ## Open the project
 
 Open `DealOrNoDealStage.uproject` in Unreal Engine 5.7. The editor and game startup
