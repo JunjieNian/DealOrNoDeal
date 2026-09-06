@@ -1,0 +1,186 @@
+{
+  "checks": [
+    {
+      "check": "Uniform flight rise",
+      "passed": true,
+      "side": -1,
+      "flight": 0,
+      "rise_cm": 14.125
+    },
+    {
+      "check": "Uniform flight rise",
+      "passed": true,
+      "side": -1,
+      "flight": 1,
+      "rise_cm": 20.0
+    },
+    {
+      "check": "Uniform flight rise",
+      "passed": true,
+      "side": -1,
+      "flight": 2,
+      "rise_cm": 20.0
+    },
+    {
+      "check": "Uniform flight rise",
+      "passed": true,
+      "side": -1,
+      "flight": 3,
+      "rise_cm": 20.0
+    },
+    {
+      "check": "Post flange supported by actual tread",
+      "passed": true,
+      "side": -1,
+      "step": 0
+    },
+    {
+      "check": "Post flange supported by actual tread",
+      "passed": true,
+      "side": -1,
+      "step": 3
+    },
+    {
+      "check": "Post flange supported by actual tread",
+      "passed": true,
+      "side": -1,
+      "step": 7
+    },
+    {
+      "check": "Post flange supported by actual tread",
+      "passed": true,
+      "side": -1,
+      "step": 11
+    },
+    {
+      "check": "Post flange supported by actual tread",
+      "passed": true,
+      "side": -1,
+      "step": 15
+    },
+    {
+      "check": "Continuous 16-step access flight",
+      "passed": true,
+      "side": -1
+    },
+    {
+      "check": "Uniform flight rise",
+      "passed": true,
+      "side": 1,
+      "flight": 0,
+      "rise_cm": 14.125
+    },
+    {
+      "check": "Uniform flight rise",
+      "passed": true,
+      "side": 1,
+      "flight": 1,
+      "rise_cm": 20.0
+    },
+    {
+      "check": "Uniform flight rise",
+      "passed": true,
+      "side": 1,
+      "flight": 2,
+      "rise_cm": 20.0
+    },
+    {
+      "check": "Uniform flight rise",
+      "passed": true,
+      "side": 1,
+      "flight": 3,
+      "rise_cm": 20.0
+    },
+    {
+      "check": "Post flange supported by actual tread",
+      "passed": true,
+      "side": 1,
+      "step": 0
+    },
+    {
+      "check": "Post flange supported by actual tread",
+      "passed": true,
+      "side": 1,
+      "step": 3
+    },
+    {
+      "check": "Post flange supported by actual tread",
+      "passed": true,
+      "side": 1,
+      "step": 7
+    },
+    {
+      "check": "Post flange supported by actual tread",
+      "passed": true,
+      "side": 1,
+      "step": 11
+    },
+    {
+      "check": "Post flange supported by actual tread",
+      "passed": true,
+      "side": 1,
+      "step": 15
+    },
+    {
+      "check": "Continuous 16-step access flight",
+      "passed": true,
+      "side": 1
+    },
+    {
+      "check": "Separate mesh envelopes",
+      "passed": true,
+      "left": "SM_CaseTerraces",
+      "right": "SM_AmountDisplay",
+      "axis_gaps_cm": [
+        -233.99996757507324,
+        53.00002098083496,
+        -389.1640901565552
+      ]
+    },
+    {
+      "check": "Separate mesh envelopes",
+      "passed": true,
+      "left": "SM_CaseTerraces",
+      "right": "SM_BankerSuite",
+      "axis_gaps_cm": [
+        -338.0000114440918,
+        5.999994277954102,
+        -388.1640911102295
+      ]
+    },
+    {
+      "check": "Separate mesh envelopes",
+      "passed": true,
+      "left": "SM_CaseTerraces",
+      "right": "SM_ArchSkyline",
+      "axis_gaps_cm": [
+        31.999921798706055,
+        -1310.0000381469727,
+        -388.1640911102295
+      ]
+    },
+    {
+      "check": "Separate mesh envelopes",
+      "passed": true,
+      "left": "SM_AudienceArchitecture",
+      "right": "SM_AmountDisplay",
+      "axis_gaps_cm": [
+        119.49996948242188,
+        -492.9999351501465,
+        -182.0000171661377
+      ]
+    },
+    {
+      "check": "Separate mesh envelopes",
+      "passed": true,
+      "left": "SM_AudienceArchitecture",
+      "right": "SM_BankerSuite",
+      "axis_gaps_cm": [
+        94.99998092651367,
+        -539.9999618530273,
+        -181.000018119812
+      ]
+    }
+  ],
+  "passed": true
+}

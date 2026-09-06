@@ -11,6 +11,19 @@ import struct
 from pathlib import Path
 from mathutils import Vector
 
+BOARD_Y = 895.0
+GEOMETRY_CHECKS = []
+
+def bounds_cm(obj):
+    points = [obj.matrix_world @ v.co for v in obj.data.vertices]
+    return ([min(p[i] for p in points)*100 for i in range(3)],
+            [max(p[i] for p in points)*100 for i in range(3)])
+
+def require_geometry(condition, name, **measurements):
+    GEOMETRY_CHECKS.append(dict(check=name, passed=bool(condition), **measurements))
+    if not condition:
+        raise RuntimeError('Studio geometry validation failed: '+name)
+
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'ArtSource' / 'Export'
 OUT.mkdir(parents=True, exist_ok=True)
@@ -179,25 +192,51 @@ export('SM_BankerPhone')
 for row,(count,x,z) in enumerate(zip([6,7,7,6],[285,405,525,645],[55,135,215,295])):
     box('Tier structure',(x,0,z/2),(120,1070,z),'Obsidian',2)
     box('Stage tread',(x,0,z),(120,1070,3),'Floor',1)
-    box('Brushed fascia',(x-60,0,z-36),(2,1068,64),'Blue',.4)
-    for zz in [z-4,z-65]: box('Step LED',(x-62,0,zz),(1.5,1062,2),'LED_Cool',.2)
+    # The first show tier is only 55 cm high. Keep its trim above the floor.
+    fascia_bottom=max(4,z-68)
+    fascia_top=z-4
+    box('Brushed fascia',(x-60,0,(fascia_bottom+fascia_top)/2),(2,1068,fascia_top-fascia_bottom),'Blue',.4)
+    for zz in [z-4,max(4,z-65)]: box('Step LED',(x-62,0,zz),(1.5,1062,2),'LED_Cool',.2)
     box('Chrome nosing',(x-62,0,z),(4,1072,2),'Chrome',.5)
-    for y in range(-480,481,80): box('Fascia joint',(x-61.3,y,z-34),(1,1,59),'Chrome',.1)
+    for y in range(-480,481,80):
+        box('Fascia joint',(x-61.3,y,(fascia_bottom+fascia_top)/2),(1,1,fascia_top-fascia_bottom-3),'Chrome',.1)
     for pos in range(count):
         y=(pos-(count-1)/2)*145
         box('Case plinth foot',(x,y,z+4),(48,58,6),'Chrome',2)
         box('Case plinth column',(x+5,y,z+44),(10,12,80),'Obsidian',1)
         box('Plinth light',(x-1,y,z+44),(1,3,68),'LED_Cool',.2)
         box('Case shelf',(x,y,z+89),(27,59,4),'Chrome',1)
-    for side in [-1,1]:
-        # Four real 20 cm access steps beside each show tier.
+
+# Continuous mirrored stairs with actual tread-mounted posts. Each fourth tread
+# meets its show tier at the finished surface, including the 3 cm top slab.
+for side in [-1,1]:
+    previous_top=0.0
+    stair_nodes=[]
+    stair_meshes=[]
+    for row,(x,z) in enumerate(zip([285,405,525,645],[55,135,215,295])):
+        landing_top=z+1.5
+        rise=(landing_top-previous_top)/4
+        require_geometry(0 < rise <= 20.01,'Uniform flight rise',side=side,flight=row,rise_cm=rise)
         for k in range(4):
-            height=max(5,z-60+k*20)
-            box('Access stair',(x-45+k*30,side*568,height/2),(30,62,height),'Obsidian',.6)
-            box('Access stair marker',(x-59+k*30,side*568,height),(2,60,1.4),'LED_Warm',.2)
-        rod('Handrail upright',(x,side*608,z),(x,side*608,z+90),2,'Chrome')
-        if row:
-            rod('Handrail',(x-120,side*608,z+10),(x,side*608,z+90),2,'Chrome')
+            height=previous_top+rise*(k+1)
+            cx=x-45+k*30
+            stair=box('Access stair',(cx,side*580,height/2),(30,88,height),'Obsidian',.35)
+            stair_meshes.append(stair)
+            # Narrow inset marker sits on the tread, clear of the handrail flange.
+            box('Access stair marker',(cx-13,side*580,height+.25),(2,66,.5),'LED_Warm',.15)
+            stair_nodes.append((cx,side*617,height))
+        previous_top=landing_top
+    for i,(cx,cy,top) in enumerate(stair_nodes):
+        if i in (0,3,7,11,15):
+            flange=box('Handrail mounting flange',(cx,cy,top+1),(8,8,2),'Chrome',.3)
+            rod('Handrail upright',(cx,cy,top+1),(cx,cy,top+90),2,'Chrome')
+            lo,hi=bounds_cm(stair_meshes[i]); flo,fhi=bounds_cm(flange)
+            require_geometry(abs(flo[2]-hi[2])<.02 and all(flo[a]>=lo[a] and fhi[a]<=hi[a] for a in (0,1)),
+                'Post flange supported by actual tread',side=side,step=i)
+        if i:
+            a=stair_nodes[i-1]
+            rod('Continuous handrail',(a[0],a[1],a[2]+90),(cx,cy,top+90),2,'Chrome')
+    require_geometry(len(stair_nodes)==16,'Continuous 16-step access flight',side=side)
 export('SM_CaseTerraces')
 
 # Smooth continuous three-band arch, with real separators and a layered city cyclorama.
@@ -242,14 +281,14 @@ box('Booth warm strip',(400,-845,686),(5,388,3),'LED_Red',.3)
 export('SM_BankerSuite')
 
 # Screen enclosure dimensions contain both columns (the old housing was narrower than its text).
-box('Amount screen enclosure',(435,760,350),(40,430,702),'Obsidian',5)
-for y in [545,975]:
+box('Amount screen enclosure',(435,BOARD_Y,350),(40,430,702),'Obsidian',5)
+for y in [BOARD_Y-215,BOARD_Y+215]:
     box('Screen chrome stile',(410,y,350),(12,6,696),'Chrome',1)
     box('Screen perimeter practical',(402,y,350),(2,2,689),'LED_Warm',.4)
-for z in [6,694]: box('Screen horizontal frame',(408,760,z),(10,428,8),'Chrome',1)
+for z in [6,694]: box('Screen horizontal frame',(408,BOARD_Y,z),(10,428,8),'Chrome',1)
 for col in [-1,1]:
     for row in range(13):
-        box('Amount cell bezel',(394,760+col*98,603-row*46),(5,189,39),'Chrome',1)
+        box('Amount cell bezel',(394,BOARD_Y+col*98,603-row*46),(5,189,39),'Chrome',1)
 export('SM_AmountDisplay')
 
 # Real stepped bleachers and rails. Chairs remain GPU-instanced by the runtime module.
@@ -260,9 +299,12 @@ for row in range(5):
 for side in [-1,1]:
     for row in range(4):
         y=side*(810+row*88); top=row*28
-        box('Side bleacher',(-20,y,top/2-2),(1250,88,max(4,top)),'Rubber',.6)
-    for x in range(-640,601,155): rod('Audience rail post',(x,side*1168,84),(x,side*1168,179),2,'Chrome')
-    rod('Audience safety rail',(-640,side*1168,179),(600,side*1168,179),2,'Chrome')
+        # Seats end at X=160. Stop the platform at 270, leaving a real gap
+        # before the board and booth instead of extending solid risers into them.
+        box('Side bleacher',(-187.5,y,top/2-2),(915,88,max(4,top)),'Rubber',.6)
+    for x in [-640,-485,-330,-175,-20,135,270]:
+        rod('Audience rail post',(x,side*1168,84),(x,side*1168,179),2,'Chrome')
+    rod('Audience safety rail',(-640,side*1168,179),(270,side*1168,179),2,'Chrome')
 export('SM_AudienceArchitecture')
 
 # Visible square box-truss and lamp bodies aligned with the physical light positions.
@@ -308,6 +350,16 @@ box('Lid face inset',(-1.75,0,17),(.4,41,26),'Chrome',1.4)
 for y in [-18,18]: box('Hinge barrel',(.2,y,.8),(3,5,2),'Chrome',.7)
 export('SM_BriefcaseLid')
 
+# Check measured mesh envelopes, not just authored coordinate constants.
+bpy.context.view_layer.update()
+for left,right in [('SM_CaseTerraces','SM_AmountDisplay'),('SM_CaseTerraces','SM_BankerSuite'),
+                   ('SM_CaseTerraces','SM_ArchSkyline'),('SM_AudienceArchitecture','SM_AmountDisplay'),
+                   ('SM_AudienceArchitecture','SM_BankerSuite')]:
+    amin,amax=bounds_cm(bpy.data.objects[left]); bmin,bmax=bounds_cm(bpy.data.objects[right])
+    gaps=[max(bmin[i]-amax[i],amin[i]-bmax[i]) for i in range(3)]
+    require_geometry(max(gaps)>1,'Separate mesh envelopes',left=left,right=right,axis_gaps_cm=gaps)
+(OUT/'geometry-validation.json').write_text(json.dumps(dict(checks=GEOMETRY_CHECKS,
+    passed=all(c['passed'] for c in GEOMETRY_CHECKS)),indent=2))
 bpy.ops.wm.save_as_mainfile(filepath=str(ROOT/'ArtSource'/'DealStudio.blend'))
 (OUT/'materials.json').write_text(json.dumps(SPECS,indent=2))
 

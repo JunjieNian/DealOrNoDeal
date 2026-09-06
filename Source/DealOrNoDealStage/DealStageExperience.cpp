@@ -16,6 +16,9 @@
 #include "Rendering/SlateRenderer.h"
 #include "Styling/CoreStyle.h"
 #include "Components/TextRenderComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "Engine/StaticMeshActor.h"
+#include "Engine/StaticMesh.h"
 
 void AStageInteractionDirector::StartGame()
 {
@@ -337,10 +340,33 @@ void AStageInteractionDirector::RunBoardLayoutValidationStep()
             StartGame(); PC->SwitchToCamera(3);
             break;
         case 1:
+        {
+            // Validate the cooked mesh envelopes too: a correct Blender source
+            // cannot protect against stale imports or displaced level actors.
+            TArray<AActor*> Architecture;
+            UGameplayStatics::GetAllActorsOfClass(this,AStaticMeshActor::StaticClass(),Architecture);
+            TMap<FString,FBox> MeshBounds;
+            for (AActor* Actor:Architecture)
+            {
+                UStaticMeshComponent* Mesh=Cast<AStaticMeshActor>(Actor)->GetStaticMeshComponent();
+                if (Mesh && Mesh->GetStaticMesh()) MeshBounds.Add(Mesh->GetStaticMesh()->GetName(),Mesh->Bounds.GetBox());
+            }
+            const TCHAR* Pairs[][2]={
+                {TEXT("SM_CaseTerraces"),TEXT("SM_AmountDisplay")},
+                {TEXT("SM_CaseTerraces"),TEXT("SM_BankerSuite")},
+                {TEXT("SM_CaseTerraces"),TEXT("SM_ArchSkyline")},
+                {TEXT("SM_AudienceArchitecture"),TEXT("SM_AmountDisplay")},
+                {TEXT("SM_AudienceArchitecture"),TEXT("SM_BankerSuite")}};
+            for (const auto& Pair:Pairs)
+            {
+                const FBox* A=MeshBounds.Find(Pair[0]); const FBox* B=MeshBounds.Find(Pair[1]);
+                Check(A && B && !A->Intersect(*B),TEXT("Cooked architecture envelopes must be separated"));
+            }
             CheckBoardClear(); Capture(TEXT("Choose"));
             Click(X+18+3*90+41,Y+83+2*47+20,TEXT("Case.12"));
             Check(HighlightedBriefcase==12 && PlayerBriefcase==INDEX_NONE,TEXT("Sidebar previews case before confirmation"));
             break;
+        }
         case 2:
             Click(X+194,Y+493,TEXT("Confirm"));
             Check(PlayerBriefcase==12 && GamePhase==EDealGamePhase::OpenCases,TEXT("Sidebar confirmation keeps case"));

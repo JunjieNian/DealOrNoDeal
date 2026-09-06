@@ -741,6 +741,16 @@ void AStageCameraRig::ActivateCamera(int32 CameraIndex)
 
 void AStageCameraRig::CalcCamera(float DeltaTime, FMinimalViewInfo& OutResult)
 {
+    // Opt-in inspection shots for rendered geometry regression captures.
+    int32 InspectionSide=0;
+    FParse::Value(FCommandLine::Get(),TEXT("StageInspectSide="),InspectionSide);
+    if (InspectionSide==1 || InspectionSide==-1)
+    {
+        OutResult.Location=FVector(-300.f,InspectionSide*950.f,420.f);
+        OutResult.Rotation=(FVector(440.f,InspectionSide*580.f,145.f)-OutResult.Location).Rotation();
+        OutResult.FOV=55.f;
+        return;
+    }
     BoardSelectionHoldSeconds = FMath::Max(0.f, BoardSelectionHoldSeconds - DeltaTime);
     FMinimalViewInfo Target;
     StageCameras[ActiveCameraIndex]->GetCameraView(DeltaTime,Target);
@@ -1406,7 +1416,7 @@ ADealStageSet::ADealStageSet()
     WorldShell = CreateModule(TEXT("00_WorldShell"), AStageWorldShellModule::StaticClass(), FVector::ZeroVector);
     CentralPlatform = CreateModule(TEXT("01_CentralPlatform"), AStagePlatformModule::StaticClass(), FVector(-100.0f, 0.0f, 0.0f));
     ModelStaircase = CreateModule(TEXT("02_ModelStaircase_6_7_7_6"), AStageStaircaseModule::StaticClass(), FVector::ZeroVector);
-    AmountBoard = CreateModule(TEXT("03_AmountBoard_26Values"), AStageAmountBoardModule::StaticClass(), FVector(420.0f, 760.0f, 0.0f));
+    AmountBoard = CreateModule(TEXT("03_AmountBoard_26Values"), AStageAmountBoardModule::StaticClass(), FVector(420.0f, 895.0f, 0.0f));
     CityBackdrop = CreateModule(TEXT("04_CityBackdrop_GrandArch"), AStageBackdropModule::StaticClass(), FVector(820.0f, 0.0f, 0.0f));
     BankerBooth = CreateModule(TEXT("05_BankerHighBooth"), AStageBankerBoothModule::StaticClass(), FVector(540.0f, -845.0f, 0.0f));
     Audience = CreateModule(TEXT("06_Audience_UShape"), AStageAudienceModule::StaticClass(), FVector::ZeroVector);

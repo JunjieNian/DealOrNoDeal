@@ -1,4 +1,4 @@
-# Studio Experience 0.4.1
+# Studio Experience 0.4.2
 
 这是在原有 2006–2008 年 Culver Studios 风格布局基础上的演播室场景迭代。
 保留中央游戏台、6+7+7+6 的 26 箱阶梯、右侧金额屏、左侧银行家高台和 U 形空观众区。
@@ -61,9 +61,12 @@ FBX 从 Blender 导入时 Y 坐标会反射；布景 Actor 统一使用 `(1,-1,1
 
 ## 验证入口
 
-当前可运行包：`Builds/DealOrNoDealStage-Studio-0.4.1/Windows`。远端下载见 [v0.4.1 Release](https://github.com/JunjieNian/DealOrNoDeal/releases/tag/v0.4.1)。解压后保留整个 Windows 文件夹，启动其中的 `DealOrNoDealStage.exe`。
+当前可运行包：`Builds/DealOrNoDealStage-Studio-0.4.2/Windows`。远端下载见 [v0.4.2 Release](https://github.com/JunjieNian/DealOrNoDeal/releases/tag/v0.4.2)。解压后保留整个 Windows 文件夹，启动其中的 `DealOrNoDealStage.exe`。
+
+0.4.2 将金额板移出侧梯范围，重建两侧各 16 级连续踏步和实际落地的扶手底座，修正第一层装饰板埋地，并收短两侧看台的后台延伸。详见 [几何修复验证](GeometryFixValidation.md)。
 
 - `Scripts/Verify-Cam4Package.ps1`：验证实际打包程序的三个分辨率布局、选箱命中框、金额格避让、镜头切换及游戏流程。
+- `Scripts/Verify-GeometryRelease.ps1`：运行以上回归，并保存全景、箱阵、金额板及左右侧梯近景；同时检查实际运行资源的布景边界分离。
 - `-DealBoardLayoutTest -seconds=18`：验证 Cam 4 全部 26 个金额格无遮挡，以及预选、确认、开箱、禁用已选/已开箱和切回底部栏；保存四个阶段截图。
 - `-DealAutoTest`：完整拒绝报价并保留原箱路线。
 - `-DealAutoAcceptTest`：第一轮报价成交路线。

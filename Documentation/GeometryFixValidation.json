@@ -1,0 +1,359 @@
+{
+  "version": "0.4.2-studio-experience",
+  "date": "2026-09-07",
+  "package": "Builds/DealOrNoDealStage-Studio-0.4.2/Windows",
+  "geometry": {
+    "checks": [
+      {
+        "check": "Uniform flight rise",
+        "passed": true,
+        "side": -1,
+        "flight": 0,
+        "rise_cm": 14.125
+      },
+      {
+        "check": "Uniform flight rise",
+        "passed": true,
+        "side": -1,
+        "flight": 1,
+        "rise_cm": 20.0
+      },
+      {
+        "check": "Uniform flight rise",
+        "passed": true,
+        "side": -1,
+        "flight": 2,
+        "rise_cm": 20.0
+      },
+      {
+        "check": "Uniform flight rise",
+        "passed": true,
+        "side": -1,
+        "flight": 3,
+        "rise_cm": 20.0
+      },
+      {
+        "check": "Post flange supported by actual tread",
+        "passed": true,
+        "side": -1,
+        "step": 0
+      },
+      {
+        "check": "Post flange supported by actual tread",
+        "passed": true,
+        "side": -1,
+        "step": 3
+      },
+      {
+        "check": "Post flange supported by actual tread",
+        "passed": true,
+        "side": -1,
+        "step": 7
+      },
+      {
+        "check": "Post flange supported by actual tread",
+        "passed": true,
+        "side": -1,
+        "step": 11
+      },
+      {
+        "check": "Post flange supported by actual tread",
+        "passed": true,
+        "side": -1,
+        "step": 15
+      },
+      {
+        "check": "Continuous 16-step access flight",
+        "passed": true,
+        "side": -1
+      },
+      {
+        "check": "Uniform flight rise",
+        "passed": true,
+        "side": 1,
+        "flight": 0,
+        "rise_cm": 14.125
+      },
+      {
+        "check": "Uniform flight rise",
+        "passed": true,
+        "side": 1,
+        "flight": 1,
+        "rise_cm": 20.0
+      },
+      {
+        "check": "Uniform flight rise",
+        "passed": true,
+        "side": 1,
+        "flight": 2,
+        "rise_cm": 20.0
+      },
+      {
+        "check": "Uniform flight rise",
+        "passed": true,
+        "side": 1,
+        "flight": 3,
+        "rise_cm": 20.0
+      },
+      {
+        "check": "Post flange supported by actual tread",
+        "passed": true,
+        "side": 1,
+        "step": 0
+      },
+      {
+        "check": "Post flange supported by actual tread",
+        "passed": true,
+        "side": 1,
+        "step": 3
+      },
+      {
+        "check": "Post flange supported by actual tread",
+        "passed": true,
+        "side": 1,
+        "step": 7
+      },
+      {
+        "check": "Post flange supported by actual tread",
+        "passed": true,
+        "side": 1,
+        "step": 11
+      },
+      {
+        "check": "Post flange supported by actual tread",
+        "passed": true,
+        "side": 1,
+        "step": 15
+      },
+      {
+        "check": "Continuous 16-step access flight",
+        "passed": true,
+        "side": 1
+      },
+      {
+        "check": "Separate mesh envelopes",
+        "passed": true,
+        "left": "SM_CaseTerraces",
+        "right": "SM_AmountDisplay",
+        "axis_gaps_cm": [
+          -233.99996757507324,
+          53.00002098083496,
+          -389.1640901565552
+        ]
+      },
+      {
+        "check": "Separate mesh envelopes",
+        "passed": true,
+        "left": "SM_CaseTerraces",
+        "right": "SM_BankerSuite",
+        "axis_gaps_cm": [
+          -338.0000114440918,
+          5.999994277954102,
+          -388.1640911102295
+        ]
+      },
+      {
+        "check": "Separate mesh envelopes",
+        "passed": true,
+        "left": "SM_CaseTerraces",
+        "right": "SM_ArchSkyline",
+        "axis_gaps_cm": [
+          31.999921798706055,
+          -1310.0000381469727,
+          -388.1640911102295
+        ]
+      },
+      {
+        "check": "Separate mesh envelopes",
+        "passed": true,
+        "left": "SM_AudienceArchitecture",
+        "right": "SM_AmountDisplay",
+        "axis_gaps_cm": [
+          119.49996948242188,
+          -492.9999351501465,
+          -182.0000171661377
+        ]
+      },
+      {
+        "check": "Separate mesh envelopes",
+        "passed": true,
+        "left": "SM_AudienceArchitecture",
+        "right": "SM_BankerSuite",
+        "axis_gaps_cm": [
+          94.99998092651367,
+          -539.9999618530273,
+          -181.000018119812
+        ]
+      }
+    ],
+    "passed": true
+  },
+  "tests": [
+    {
+      "Run": "Cam4-Packaged-1280",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": "[2026.09.06-23.19.01:570][935]LogTemp: Display: [DealBoardLayoutTest] Completed=true Failures=0 Viewport=1280x720"
+    },
+    {
+      "Run": "Cam4-Packaged-1600",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": "[2026.09.06-23.19.23:191][925]LogTemp: Display: [DealBoardLayoutTest] Completed=true Failures=0 Viewport=1600x900"
+    },
+    {
+      "Run": "Cam4-Packaged-1920",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": "[2026.09.06-23.19.44:801][917]LogTemp: Display: [DealBoardLayoutTest] Completed=true Failures=0 Viewport=1920x1080"
+    },
+    {
+      "Run": "Cam4-Packaged-Experience",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": "[2026.09.06-23.19.50:073][  0]LogTemp: Display: [DealExperienceTest] Completed=true Failures=0"
+    },
+    {
+      "Run": "Cam4-Packaged-NoDeal",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": "[2026.09.06-23.19.57:608][  0]LogTemp: Display: [DealGameAutoTest] Completed=true Steps=34 Remaining=2 Result=Your case #1 held $25,000. Case #26 held $100,000."
+    },
+    {
+      "Run": "Cam4-Packaged-Accept",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": "[2026.09.06-23.20.03:958][  0]LogTemp: Display: [DealGameAutoAcceptTest] Completed=true Steps=6 Result=You accepted $26,200. Your case #1 held $25,000."
+    }
+  ],
+  "archive": {
+    "archive": "DealOrNoDealStage-Studio-0.4.2-Windows.zip",
+    "archive_bytes": 280572217,
+    "sha256": "37d53f9245adc419f995e1c90f580e761a0d10cbed960a044653f4aed20fb230",
+    "runtime_files": 45,
+    "runtime_bytes": 535925514,
+    "zip_crc_check": "PASS"
+  },
+  "game_binary_sha256": "656df7dad0ef75d7b36c1de882ef8edd4801ceafc038782e28f0c3f4a31e6b7d",
+  "captures": [
+    {
+      "file": "Cam4-1280x720-AfterOpen.png",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "Cam4-1280x720-Choose.png",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "Cam4-1280x720-Open.png",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "Cam4-1280x720-ReturnToCases.png",
+      "size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "Cam4-1600x900-AfterOpen.png",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "Cam4-1600x900-Choose.png",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "Cam4-1600x900-Open.png",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "Cam4-1600x900-ReturnToCases.png",
+      "size": [
+        1600,
+        900
+      ]
+    },
+    {
+      "file": "Cam4-1920x1080-AfterOpen.png",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "Cam4-1920x1080-Choose.png",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "Cam4-1920x1080-Open.png",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "Cam4-1920x1080-ReturnToCases.png",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "Geometry-Board.png",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "Geometry-Cases.png",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "Geometry-LeftStairs.png",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "Geometry-RightStairs.png",
+      "size": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "file": "Geometry-Wide.png",
+      "size": [
+        1920,
+        1080
+      ]
+    }
+  ]
+}

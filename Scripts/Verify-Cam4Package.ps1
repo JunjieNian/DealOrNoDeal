@@ -1,4 +1,4 @@
-param([string]$Package = 'Builds\DealOrNoDealStage-Studio-0.4.1\Windows')
+param([string]$Package = 'Builds\DealOrNoDealStage-Studio-0.4.2\Windows')
 $ErrorActionPreference = 'Stop'
 $studioRoot = Split-Path $PSScriptRoot -Parent
 $launcher = Join-Path $studioRoot ($Package + '\DealOrNoDealStage.exe')

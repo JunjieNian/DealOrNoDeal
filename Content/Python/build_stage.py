@@ -8,7 +8,7 @@ STAGE_MODULES = [
     ("00_WorldShell_24m_x_18m", "/Script/DealOrNoDealStage.StageWorldShellModule", (0.0, 0.0, 0.0)),
     ("01_CentralPlatform_7p8m_x_5p8m", "/Script/DealOrNoDealStage.StagePlatformModule", (-100.0, 0.0, 0.0)),
     ("02_ModelStaircase_6_7_7_6", "/Script/DealOrNoDealStage.StageStaircaseModule", (0.0, 0.0, 0.0)),
-    ("03_AmountBoard_26Values", "/Script/DealOrNoDealStage.StageAmountBoardModule", (420.0, 760.0, 0.0)),
+    ("03_AmountBoard_26Values", "/Script/DealOrNoDealStage.StageAmountBoardModule", (420.0, 895.0, 0.0)),
     ("04_CityBackdrop_GrandArch", "/Script/DealOrNoDealStage.StageBackdropModule", (820.0, 0.0, 0.0)),
     ("05_BankerHighBooth", "/Script/DealOrNoDealStage.StageBankerBoothModule", (540.0, -845.0, 0.0)),
     ("06_Audience_Broken_U", "/Script/DealOrNoDealStage.StageAudienceModule", (0.0, 0.0, 0.0)),

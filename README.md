@@ -1,4 +1,4 @@
-# Deal or No Deal — Studio Experience 0.4.1
+# Deal or No Deal — Studio Experience 0.4.2
 
 An editable Unreal Engine 5.7 television studio and a complete playable briefcase game, developed from the classic 2006–2008 Culver Studios layout. The set contains no people. Dimensions are design assumptions inherited from the original graybox; this is an interpretation, not a surveyed replica.
 
@@ -6,8 +6,8 @@ An editable Unreal Engine 5.7 television studio and a complete playable briefcas
 
 ## Play
 
-Download the portable Windows game from [Release v0.4.1](https://github.com/JunjieNian/DealOrNoDeal/releases/tag/v0.4.1), extract the ZIP, and launch `Windows/DealOrNoDealStage.exe`.
-Local builds launch from `Builds/DealOrNoDealStage-Studio-0.4.1/Windows/DealOrNoDealStage.exe`, or `Launch Studio.cmd`.
+Download the portable Windows game from [Release v0.4.2](https://github.com/JunjieNian/DealOrNoDeal/releases/tag/v0.4.2), extract the ZIP, and launch `Windows/DealOrNoDealStage.exe`.
+Local builds launch from `Builds/DealOrNoDealStage-Studio-0.4.2/Windows/DealOrNoDealStage.exe`, or `Launch Studio.cmd`.
 Copy the entire Windows folder when moving the portable game to another machine. The previous 0.3 build is kept separately. Packaged binaries are ignored by Git.
 
 1. Keep one of 26 sealed cases, using the stage or the numbered selection tray.
@@ -17,7 +17,7 @@ Copy the entire Windows folder when moving the portable game to another machine.
 
 Mouse selection previews a case before confirmation. Arrow keys and Enter work throughout selection; D/N handle offers and final choices. Escape opens the pause menu. R replays after a result, and cannot accidentally reset an active game.
 
-Cam 4 places case selection in a compact left panel so all 26 prizes, including the bottom row, remain visible. Other cameras use the bottom selection tray. See [the packaged regression report](Documentation/Cam4FixValidation.md).
+Cam 4 places case selection in a compact left panel so all 26 prizes, including the bottom row, remain visible. Other cameras use the bottom selection tray. Version 0.4.2 separates the display from the access stairs, anchors both handrails to real treads and removes intersecting bleacher extensions. See [the geometry and packaged regression report](Documentation/GeometryFixValidation.md).
 
 | Control | Action |
 | --- | --- |

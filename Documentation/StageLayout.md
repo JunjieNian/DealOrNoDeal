@@ -14,7 +14,10 @@ The stage uses centimeters. +X is upstage toward the briefcase terraces and skyl
 | Briefcases | 6+7+7+6 arrangement; 48 x 14 x 34 cm shells |
 | Case supports | Shelf top 91 cm above each terrace; no floating cases |
 | Arch | Center X about 7.9 m; radius 6.86 m |
-| Amount screen | Center X=4.35 m, Y=7.6 m; 4.3 m wide x 7.02 m high |
+| Amount screen | Center X=4.35 m, Y=8.95 m; 4.3 m wide x 7.02 m high |
+| Side access stairs | 16 treads per side, 30 cm going and 88 cm width; uniform rise within each flight |
+| Access handrails | Five tread-mounted posts per side; rail follows the treads 90 cm above their centers |
+| Side bleacher platforms | Stop at X=2.70 m, beyond the last seat and clear of the display and booth |
 | Banker suite | Center Y=-8.45 m; floor about 4.7 m, roof about 7.0 m |
 | Wide camera | X=-23.5 m, Z=10.5 m; FOV 69 degrees |
 | Board camera | Preserves the earlier approved transform and 80-degree FOV |
