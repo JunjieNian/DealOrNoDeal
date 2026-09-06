@@ -1,123 +1,52 @@
-# Deal or No Deal Stage — Unreal Engine 5.7
+# Deal or No Deal — Studio Experience 0.4.1
 
-This project is a modular graybox reconstruction of the classic 2006–2008 NBC
-`Deal or No Deal` stage at Culver Studios. The first milestone prioritizes spatial
-relationships, readable module boundaries, a playable camera setup, and stable
-interaction seams over final art.
+An editable Unreal Engine 5.7 television studio and a complete playable briefcase game, developed from the classic 2006–2008 Culver Studios layout. The set contains no people. Dimensions are design assumptions inherited from the original graybox; this is an interpretation, not a surveyed replica.
 
-![Perspective toward the stage](overview.png)
+![Studio overview](StageOverview.png)
 
-## Open the project
+## Play
 
-Open `DealOrNoDealStage.uproject` in Unreal Engine 5.7. The editor and game startup
-map is `/Game/Maps/MainStage`.
+Download the portable Windows game from [Release v0.4.1](https://github.com/JunjieNian/DealOrNoDeal/releases/tag/v0.4.1), extract the ZIP, and launch `Windows/DealOrNoDealStage.exe`.
+Local builds launch from `Builds/DealOrNoDealStage-Studio-0.4.1/Windows/DealOrNoDealStage.exe`, or `Launch Studio.cmd`.
+Copy the entire Windows folder when moving the portable game to another machine. The previous 0.3 build is kept separately. Packaged binaries are ignored by Git.
 
-## Current graybox modules
+1. Keep one of 26 sealed cases, using the stage or the numbered selection tray.
+2. Open 6, 5, 4, 3, 2, 1, 1, 1, 1 cases over nine rounds.
+3. Answer the Banker and accept a guaranteed offer, or continue playing.
+4. At the final two, keep your case or swap before the result is revealed.
 
-- `00_WorldShell`: 24 m × 18 m working envelope and upstage masking wall.
-- `01_CentralPlatform`: approximately 7.8 m × 5.8 m platform, translucent table,
-  and tagged Banker phone placeholder.
-- `02_ModelStaircase_6_7_7_6`: four broad tiers and 26 numbered, deliberately
-  floating briefcase interaction sockets in the requested 6+7+7+6 distribution.
-  The tiers are widened and deepened so the floating cases and their shadows read
-  as supported by the staircase. No model or human stand-ins are rendered.
-- `03_AmountBoard_26Values`: 4 m × 7 m housing, all 26 US prize values, and an
-  active/eliminated visual state API.
-- `04_CityBackdrop_GrandArch`: skyline massing, lit-window instances, and the
-  large segmented arch.
-- `05_BankerHighBooth`: elevated tower, desk, translucent front, and label.
-- `06_Audience_UShape`: broken-U risers with roughly 200 representative seat
-  blocks; the reported studio capacity of roughly 360 is retained as a design note.
-- `07_LightingRig`: cool stage wash, warm accents, Banker/Deal/NoDeal cue hooks.
-- `08_CameraRig_4Shots`: wide master, game table, model stairs, and amount board.
-- `09_InteractionDirector`: briefcase selection/open state, eliminated amount,
-  Banker offer, and lighting cue entry points.
+Mouse selection previews a case before confirmation. Arrow keys and Enter work throughout selection; D/N handle offers and final choices. Escape opens the pause menu. R replays after a result, and cannot accidentally reset an active game.
 
-## Play controls
+Cam 4 places case selection in a compact left panel so all 26 prizes, including the bottom row, remain visible. Other cameras use the bottom selection tray. See [the packaged regression report](Documentation/Cam4FixValidation.md).
 
-- `Mouse`: click a floating briefcase to keep/open it; click the on-screen
-  `DEAL`, `NO DEAL`, and `PLAY AGAIN` buttons
-- `Left / Right`: move the active briefcase selection
-- `Enter` or `Space`: keep the highlighted case, then open highlighted cases
-- `D`: accept the current Banker offer (Deal)
-- `N`: reject the current Banker offer (No Deal)
-- `R`: start a new randomized game after the final result
-- `1`: wide master camera
-- `2`: central game-table camera
-- `3`: floating-briefcase staircase camera
-- `4`: amount-board camera
-- `C`: cycle through the four cameras
-- `Esc`: exit the standalone prototype
+| Control | Action |
+| --- | --- |
+| 1 / 2 / 3 / 4; C | Wide / table / case terraces / prize board; cycle views |
+| Enter / Space | Confirm selection, answer call, continue reveal |
+| D / N | Deal / No Deal; keep / swap at the final two |
+| Esc | Pause menu, or cancel an offer confirmation |
+| M / T / A | Toggle sound / reveal pace / automatic cameras |
+| F5 | High / Epic graphics |
+| F11 / Alt+Enter | Full screen |
 
-## Simple playable game loop
+## The studio
 
-The graybox now includes a complete mouse- and keyboard-playable round:
+The level retains ten independent runtime modules and adds nine editable groups of authored architecture: studio shell, central platform, phone, case terraces, arch and skyline, Banker suite, amount display, audience architecture and truss. The 26 case bodies/lids and 177 instanced chairs share reusable meshes.
 
-1. Choose one of 26 numbered briefcases to keep sealed.
-2. Open `6, 5, 4, 3, 2, 1, 1, 1, 1` cases across successive rounds.
-3. Each opened case gets a prominent center-screen amount reveal for 2.8 seconds,
-   then that amount is removed from the physical amount board.
-4. The Banker offers a rounded percentage of the average value still in play; the
-   percentage rises in later rounds.
-5. Accept with `D`, or continue with `N`.
-6. If the last offer is rejected, the player's case and the final competing case
-   are revealed. Press `R` for a freshly shuffled game.
+Manufactured edges, aluminium/chrome finishes, smoked and clear glass, upholstery, stepped access, handrails, practical strips, restrained sound cues, smooth camera movement and animated box lids replace the earlier floating-case graybox. Lighting cues retain neutral key lighting so case numbers and prizes stay legible.
 
-The HUD shows the current phase, selected case, cases remaining, last revealed
-amount, offer, controls, and final result. Banker offers use a compact left-side
-panel so the amount board remains visible, and the amount-board camera keeps the
-full board in frame. Camera and lighting cues change with the game phase, while
-the stage remains intentionally empty of people. Graybox annotations and camera
-markers are hidden in the playable presentation.
+## Edit and regenerate
 
-## Standalone prototype delivery
+Open `DealOrNoDealStage.uproject` in Unreal Engine 5.7. The default map is `/Game/Maps/MainStage`.
 
-Local packaged Windows builds are archived under
-`Builds/DealOrNoDealStage-Prototype-0.3/`. The `Builds` directory is intentionally
-ignored by Git because cooked binaries are reproducible and exceed GitHub's normal
-source-file limits. Launch `DealOrNoDealStage.exe`; Unreal Editor is not required.
-The folder is a portable build, so keep its adjacent `Content`, `Engine`, and
-configuration files together when copying it to another Windows computer.
+- `ArtSource/DealStudio.blend`: editable Blender scene.
+- `ArtSource/build_studio.py`: deterministic geometry and original audio generator.
+- `ArtSource/Export/`: FBX meshes and the material recipe.
+- `Content/Python/build_studio.py`: import materials/meshes/audio and regenerate the studio.
+- `Content/Python/build_stage.py`: original ten-module assembly, reused by the studio generator.
+- `Source/DealOrNoDealStage/DealStageModules.*`: stage, lighting, cameras and game rules.
+- `Source/DealOrNoDealStage/DealStageExperience.cpp`: experience controls, responsive HUD and regressions.
 
-## Interaction-ready API seams
+After compiling the Editor target, run UnrealEditor-Cmd with this project's `-ExecutePythonScript=<absolute path to Content/Python/build_studio.py>`. Use `-StudioSkipImport` to rebuild the map without reimporting meshes or audio. Keep rendering and audio enabled for asset import on Unreal 5.7.
 
-The runtime module exposes Blueprint-callable methods without locking the project
-to a UI implementation:
-
-- `SelectBriefcase(BriefcaseNumber)`
-- `OpenBriefcase(BriefcaseNumber, AmountIndex)`
-- `SetBankerOffer(NewOffer)`
-- `TriggerLightingCue(CueName)`
-- `SetAmountActive(AmountIndex, bActive)`
-- `ActivateCamera(CameraIndex)`
-
-This keeps later briefcase gameplay, amount elimination, Deal/No Deal buttons,
-phone sequences, audience feedback, and show-control cues independent from the
-graybox meshes.
-
-## Working scale
-
-Unreal uses centimeters (`1 Unreal Unit = 1 cm`). The model zone spans roughly
-10.7 m and reaches 3.0 m at the top tier before the model markers; the backdrop
-arch peaks around 6.8 m. The complete working shell is 24 m wide by 18 m deep.
-These are explicit first-pass assumptions intended for refinement against better
-photographic and video references.
-
-See `Documentation/StageLayout.md` for coordinates, assumptions, and the next
-iteration plan.
-
-## Regenerate the deterministic graybox level
-
-After compiling the Editor target, set `UE_ROOT` to the installed Unreal Engine
-5.7 directory and run Unreal Editor in command mode with:
-
-```powershell
-$UnrealEditorCmd = Join-Path $env:UE_ROOT 'Engine\Binaries\Win64\UnrealEditor-Cmd.exe'
-& $UnrealEditorCmd `
-  '.\DealOrNoDealStage.uproject' `
-  '-ExecutePythonScript=.\Content\Python\build_stage.py' `
-  -unattended -nop4 -nosplash -NoSound
-```
-
-Keep rendering enabled when regenerating; Unreal 5.7's engine primitive-material
-path is not stable under `-NullRHI` for this construction script.
+The project uses engine-native rendering plus original geometry and sound. It has no external asset download or runtime network dependency. See [the experience notes](Documentation/StudioExperience.md) for detailed controls, assumptions, regeneration and verification.

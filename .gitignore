@@ -14,3 +14,5 @@ Saved/
 *.sdf
 *.pdb
 *.log
+__pycache__/
+*.blend1

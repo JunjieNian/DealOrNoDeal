@@ -1,0 +1,66 @@
+{
+  "version": "0.4.1-studio-experience",
+  "date": "2026-09-06",
+  "package": "Builds/DealOrNoDealStage-Studio-0.4.1/Windows",
+  "game_binary_sha256": "60b71464136eb34563613aab087361cfaf4f859bde1b3c509feaef706f1cdb82",
+  "tests": [
+    {
+      "Run": "Cam4-Packaged-1280",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": "[2026.09.06-14.08.14:449][933]LogTemp: Display: [DealBoardLayoutTest] Completed=true Failures=0 Viewport=1280x720"
+    },
+    {
+      "Run": "Cam4-Packaged-1600",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": "[2026.09.06-14.08.36:094][928]LogTemp: Display: [DealBoardLayoutTest] Completed=true Failures=0 Viewport=1600x900"
+    },
+    {
+      "Run": "Cam4-Packaged-1920",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": "[2026.09.06-14.08.57:931][919]LogTemp: Display: [DealBoardLayoutTest] Completed=true Failures=0 Viewport=1920x1080"
+    },
+    {
+      "Run": "Cam4-Packaged-Experience",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": "[2026.09.06-14.09.03:436][  0]LogTemp: Display: [DealExperienceTest] Completed=true Failures=0"
+    },
+    {
+      "Run": "Cam4-Packaged-NoDeal",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": "[2026.09.06-14.09.10:887][  0]LogTemp: Display: [DealGameAutoTest] Completed=true Steps=34 Remaining=2 Result=Your case #1 held $25,000. Case #26 held $100,000."
+    },
+    {
+      "Run": "Cam4-Packaged-Accept",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": "[2026.09.06-14.09.17:330][  0]LogTemp: Display: [DealGameAutoAcceptTest] Completed=true Steps=6 Result=You accepted $26,200. Your case #1 held $25,000."
+    }
+  ],
+  "archive": {
+    "archive": "DealOrNoDealStage-Studio-0.4.1-Windows.zip",
+    "archive_bytes": 279910863,
+    "sha256": "efb649029449f3b6a24aaaf7f8e158c6babf9e757d822a8ef9c5f409d9fa5eab",
+    "runtime_files": 45,
+    "runtime_bytes": 535150270,
+    "zip_crc_check": "PASS"
+  },
+  "screenshots": [
+    "Cam4-1280x720-AfterOpen.png",
+    "Cam4-1280x720-Choose.png",
+    "Cam4-1280x720-Open.png",
+    "Cam4-1280x720-ReturnToCases.png",
+    "Cam4-1600x900-AfterOpen.png",
+    "Cam4-1600x900-Choose.png",
+    "Cam4-1600x900-Open.png",
+    "Cam4-1600x900-ReturnToCases.png",
+    "Cam4-1920x1080-AfterOpen.png",
+    "Cam4-1920x1080-Choose.png",
+    "Cam4-1920x1080-Open.png",
+    "Cam4-1920x1080-ReturnToCases.png"
+  ]
+}

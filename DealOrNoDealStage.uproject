@@ -2,7 +2,7 @@
   "FileVersion": 3,
   "EngineAssociation": "5.7",
   "Category": "Visualization",
-  "Description": "Modular graybox reconstruction of the 2006-2008 NBC Deal or No Deal stage.",
+  "Description": "Editable television studio and complete interactive briefcase game, inspired by the classic 2006-2008 stage.",
   "Modules": [
     {
       "Name": "DealOrNoDealStage",
@@ -11,6 +11,10 @@
     }
   ],
   "Plugins": [
+    {
+      "Name": "AndroidFileServer",
+      "Enabled": false
+    },
     {
       "Name": "PythonScriptPlugin",
       "Enabled": true

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Camera/CameraTypes.h"
 #include "GameFramework/Actor.h"
 #include "GameFramework/GameModeBase.h"
 #include "GameFramework/HUD.h"
@@ -9,6 +10,7 @@
 #include "DealStageModules.generated.h"
 
 class UCameraComponent;
+class UFont;
 class UChildActorComponent;
 class UInstancedStaticMeshComponent;
 class ULightComponent;
@@ -19,10 +21,13 @@ class UTextRenderComponent;
 UENUM(BlueprintType)
 enum class EDealGamePhase : uint8
 {
+    Welcome,
     ChoosePlayerCase UMETA(DisplayName="Choose Player Case"),
     OpenCases UMETA(DisplayName="Open Cases"),
     RevealAmount UMETA(DisplayName="Reveal Amount"),
+    BankerCalling,
     BankerOffer UMETA(DisplayName="Banker Offer"),
+    FinalChoice,
     GameOver UMETA(DisplayName="Game Over")
 };
 
@@ -120,6 +125,7 @@ class DEALORNODEALSTAGE_API AStageStaircaseModule : public AStageModuleBase
 public:
     AStageStaircaseModule();
     virtual void OnConstruction(const FTransform& Transform) override;
+    virtual void Tick(float DeltaSeconds) override;
 
     UFUNCTION(BlueprintCallable, Category="Deal Stage|Interaction")
     void SetBriefcaseHighlight(int32 BriefcaseNumber, bool bHighlighted);
@@ -142,6 +148,10 @@ private:
 
     UPROPERTY(VisibleAnywhere, Category="Deal Stage|Staircase")
     TArray<TObjectPtr<UTextRenderComponent>> BriefcaseLabels;
+
+    UPROPERTY(VisibleAnywhere, Category="Deal Stage|Staircase")
+    TArray<TObjectPtr<UStaticMeshComponent>> BriefcaseLids;
+    TArray<bool> OpenTargets;
 };
 
 UCLASS(Blueprintable)
@@ -240,6 +250,7 @@ class DEALORNODEALSTAGE_API AStageLightingModule : public AStageModuleBase
 
 public:
     AStageLightingModule();
+    virtual void Tick(float DeltaSeconds) override;
 
     UFUNCTION(BlueprintCallable, Category="Deal Stage|Lighting")
     void ApplyLightingCue(FName CueName);
@@ -247,6 +258,8 @@ public:
 private:
     UPROPERTY(VisibleAnywhere, Category="Deal Stage|Lighting")
     TArray<TObjectPtr<ULightComponent>> StageLights;
+    TArray<FLinearColor> CueColors;
+    TArray<float> CueIntensities;
 };
 
 UCLASS(Blueprintable)
@@ -256,12 +269,14 @@ class DEALORNODEALSTAGE_API AStageCameraRig : public AStageModuleBase
 
 public:
     AStageCameraRig();
+    virtual void CalcCamera(float DeltaTime, FMinimalViewInfo& OutResult) override;
 
     UFUNCTION(BlueprintCallable, Category="Deal Stage|Camera")
     void ActivateCamera(int32 CameraIndex);
 
     UFUNCTION(BlueprintPure, Category="Deal Stage|Camera")
     int32 GetActiveCameraIndex() const { return ActiveCameraIndex; }
+    bool UsesBoardSelectionPanel() const { return ActiveCameraIndex == 3 || BoardSelectionHoldSeconds > 0.f; }
 
 private:
     UPROPERTY(VisibleAnywhere, Category="Deal Stage|Camera")
@@ -272,6 +287,9 @@ private:
 
     UPROPERTY(VisibleAnywhere, Category="Deal Stage|Camera")
     int32 ActiveCameraIndex = 0;
+    FMinimalViewInfo BlendedView;
+    bool bViewInitialized = false;
+    float BoardSelectionHoldSeconds = 0.f;
 };
 
 UCLASS(Blueprintable)
@@ -309,6 +327,27 @@ public:
 
     UFUNCTION(BlueprintCallable, Category="Deal Stage|Gameplay")
     void RestartGame();
+
+    void StartGame();
+    void AnswerBanker();
+    void ChooseFinalCase(bool bSwap);
+    void ToggleMenu();
+    void ToggleSound();
+    void TogglePace();
+    void ToggleAutoCamera();
+    void CancelPending();
+    void ClickCase(int32 Number);
+    void PlayCue(const TCHAR* Cue);
+    bool IsMenuOpen() const { return bMenuOpen; }
+    bool IsSoundEnabled() const { return bSoundEnabled; }
+    bool IsFastPace() const { return bFastPace; }
+    bool IsAutoCamera() const { return bAutoCamera; }
+    bool IsConfirmingDeal() const { return bConfirmingDeal; }
+    bool IsSelectionArmed() const { return bSelectionArmed; }
+    int32 GetFinalAlternative() const;
+    int64 GetWinnings() const { return AcceptedOffer > 0 ? AcceptedOffer : LastRevealedAmount; }
+    int64 GetHighestRemaining() const;
+    const TArray<int64>& GetOfferHistory() const { return OfferHistory; }
 
     UFUNCTION(BlueprintPure, Category="Deal Stage|Gameplay")
     EDealGamePhase GetGamePhase() const { return GamePhase; }
@@ -392,6 +431,9 @@ private:
     void FocusCamera(int32 CameraIndex);
     void RunAutomatedGameTest();
     void RunAutomatedDealAcceptTest();
+    void RunExperienceTest();
+    void RunUIValidationStep();
+    void RunBoardLayoutValidationStep();
     int32 FindNextAvailableCase(int32 StartNumber, int32 Direction) const;
     int64 CalculateBankerOffer() const;
 
@@ -417,6 +459,18 @@ private:
     TArray<int64> PrizeValuesCents;
     FTimerHandle PreviewCaptureTimer;
     FTimerHandle CaseRevealTimer;
+    FTimerHandle BankerCallTimer;
+    FTimerHandle UIValidationTimer;
+    int32 UIValidationStep = 0;
+    int32 UIValidationFailures = 0;
+    TArray<int64> OfferHistory;
+    bool bMenuOpen = false;
+    bool bSoundEnabled = true;
+    bool bFastPace = false;
+    bool bAutoCamera = true;
+    bool bConfirmingDeal = false;
+    bool bSelectionArmed = false;
+    bool bAutomated = false;
     float RevealStartedAtSeconds = 0.0f;
     static constexpr float CaseRevealDurationSeconds = 2.8f;
 };
@@ -469,6 +523,7 @@ class DEALORNODEALSTAGE_API ADealStagePlayerController : public APlayerControlle
 public:
     virtual void BeginPlay() override;
     virtual void SetupInputComponent() override;
+    virtual void Tick(float DeltaSeconds) override;
 
     UFUNCTION(BlueprintCallable, Category="Deal Stage|Camera")
     void SwitchToCamera(int32 CameraIndex);
@@ -498,8 +553,12 @@ class DEALORNODEALSTAGE_API ADealStageHUD : public AHUD
 public:
     virtual void DrawHUD() override;
     virtual void NotifyHitBoxClick(FName BoxName) override;
+    const FBox2D& GetSelectionPanelBounds() const { return SelectionPanelBounds; }
 
 private:
+    UPROPERTY(Transient)
+    TObjectPtr<UFont> RuntimeFont;
+    FBox2D SelectionPanelBounds = FBox2D(ForceInit);
     AStageInteractionDirector* FindInteractionDirector() const;
 };
 

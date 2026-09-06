@@ -10,7 +10,9 @@ public class DealOrNoDealStage : ModuleRules
             "Core",
             "CoreUObject",
             "Engine",
-            "InputCore"
+            "InputCore",
+            "Slate",
+            "SlateCore"
         });
     }
 }

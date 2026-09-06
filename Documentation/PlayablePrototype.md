@@ -1,32 +1,13 @@
-# Playable Prototype 0.3
+# Playable Studio 0.4.1
 
-Local standalone Windows builds are generated at:
+The current portable Windows release is generated at `Builds/DealOrNoDealStage-Studio-0.4.1/Windows` and available from [GitHub Releases](https://github.com/JunjieNian/DealOrNoDeal/releases/tag/v0.4.1).
 
-`Builds/DealOrNoDealStage-Prototype-0.3/Windows`
+Launch `DealOrNoDealStage.exe`. Keep the entire Windows folder together when copying it to another machine; Unreal Editor is not required. The previous 0.3 package remains separate. Cooked builds are reproducible and ignored by Git.
 
-Launch `DealOrNoDealStage.exe`. The folder is portable and must be copied as a
-whole because the launcher depends on the adjacent `DealOrNoDealStage`, `Engine`,
-and content-container files.
+The studio includes authored, beveled architecture and props, PBR material families, practical LED strips, a continuous arch, stepped seating with 177 empty chairs, supported silver briefcases and hinged lids. No people are modeled.
 
-The `Builds` directory is not committed to Git. Recreate it with Unreal's
-BuildCookRun pipeline, or distribute the separately archived portable build.
+The playable loop includes welcome, case selection and confirmation, nine rounds, amount reveals, phone calls, Banker offers with an acceptance confirmation, a final keep-or-swap choice, result comparison, and replay. Escape opens a menu that suspends reveal and phone timers. Sound, pacing and automatic camera cues can be changed during play. The HUD and its click targets scale together.
 
-## Prototype acceptance criteria
+Version 0.4.1 moves Cam 4's case controls to the left, keeping the whole prize board visible during selection and opening. The original board framing is preserved. The bottom tray returns after leaving the board camera.
 
-- Mouse-clickable floating briefcases with keyboard fallback.
-- Complete choose/open/offer/deal-or-no-deal/final-reveal/restart loop.
-- Clickable Deal, No Deal, and Play Again HUD buttons.
-- Physical amount-board elimination and case visibility state.
-- A 2.8-second center-screen reveal card before play or the Banker offer resumes.
-- Compact Banker-offer controls that keep the amount board available for review.
-- Phase-driven camera and lighting cues.
-- Widened case tiers and hidden graybox labels/camera markers for a clean stage view.
-- No rendered host, models, contestants, or audience people.
-- Cooked and packaged Win64 build that runs without Unreal Editor.
-
-## Verified flows
-
-- Full No Deal route: 24 non-player cases opened, nine offers, final two-case reveal.
-- First-offer Deal route: six cases opened, offer accepted, player case revealed.
-
-Both flows were executed from the archived packaged build after cooking.
+See [StudioExperience.md](StudioExperience.md) for controls, source assets, regeneration instructions, design assumptions and verification commands.

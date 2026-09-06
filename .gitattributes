@@ -2,3 +2,6 @@
 *.umap binary
 *.png binary
 *.ico binary
+*.blend binary
+*.fbx binary
+*.wav binary

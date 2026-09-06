@@ -1,0 +1,185 @@
+{
+  "version": "0.4.0-studio-experience",
+  "package": "Builds/DealOrNoDealStage-Studio-0.4/Windows",
+  "game_binary_sha256": "de2854b1229d084e890e53a5a54512d960e2158c4eb163856bbee982e58b32d8",
+  "runtime_bytes": 869233281,
+  "tests": [
+    {
+      "Run": "Packaged-Experience",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": "[2026.09.06-13.13.29:291][  0]LogTemp: Display: [DealExperienceTest] Completed=true Failures=0"
+    },
+    {
+      "Run": "Packaged-NoDeal",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": "[2026.09.06-13.13.36:838][  0]LogTemp: Display: [DealGameAutoTest] Completed=true Steps=34 Remaining=2 Result=Your case #1 held $25,000. Case #26 held $100,000."
+    },
+    {
+      "Run": "Packaged-Accept",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": "[2026.09.06-13.13.43:249][  0]LogTemp: Display: [DealGameAutoAcceptTest] Completed=true Steps=6 Result=You accepted $26,200. Your case #1 held $25,000."
+    },
+    {
+      "Run": "Packaged-UI-1600",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": "[2026.09.06-13.14.46:786][362]LogTemp: Display: [DealUIValidation] Completed=true Failures=0 Viewport=1600x900"
+    },
+    {
+      "Run": "Packaged-UI-1280",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": "[2026.09.06-13.15.52:393][382]LogTemp: Display: [DealUIValidation] Completed=true Failures=0 Viewport=1280x720"
+    },
+    {
+      "Run": "Packaged-Wide",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": ""
+    },
+    {
+      "Run": "Packaged-Table",
+      "ExitCode": 0,
+      "Errors": 0,
+      "Results": ""
+    }
+  ],
+  "image_checks": [
+    {
+      "file": "UI-1600x900-Welcome.png",
+      "size": [
+        1600,
+        900
+      ],
+      "heading_glyph_pixels": 591
+    },
+    {
+      "file": "UI-1600x900-Cases.png",
+      "size": [
+        1600,
+        900
+      ],
+      "heading_glyph_pixels": 600
+    },
+    {
+      "file": "UI-1600x900-Offer.png",
+      "size": [
+        1600,
+        900
+      ],
+      "heading_glyph_pixels": 601
+    },
+    {
+      "file": "UI-1600x900-ConfirmDeal.png",
+      "size": [
+        1600,
+        900
+      ],
+      "heading_glyph_pixels": 601
+    },
+    {
+      "file": "UI-1600x900-Menu.png",
+      "size": [
+        1600,
+        900
+      ],
+      "heading_glyph_pixels": 601
+    },
+    {
+      "file": "UI-1600x900-Result.png",
+      "size": [
+        1600,
+        900
+      ],
+      "heading_glyph_pixels": 591
+    },
+    {
+      "file": "UI-1600x900-FinalChoice.png",
+      "size": [
+        1600,
+        900
+      ],
+      "heading_glyph_pixels": 600
+    },
+    {
+      "file": "UI-1600x900-SwapResult.png",
+      "size": [
+        1600,
+        900
+      ],
+      "heading_glyph_pixels": 591
+    },
+    {
+      "file": "UI-1280x720-Welcome.png",
+      "size": [
+        1280,
+        720
+      ],
+      "heading_glyph_pixels": 388
+    },
+    {
+      "file": "UI-1280x720-Cases.png",
+      "size": [
+        1280,
+        720
+      ],
+      "heading_glyph_pixels": 396
+    },
+    {
+      "file": "UI-1280x720-Offer.png",
+      "size": [
+        1280,
+        720
+      ],
+      "heading_glyph_pixels": 398
+    },
+    {
+      "file": "UI-1280x720-ConfirmDeal.png",
+      "size": [
+        1280,
+        720
+      ],
+      "heading_glyph_pixels": 398
+    },
+    {
+      "file": "UI-1280x720-Menu.png",
+      "size": [
+        1280,
+        720
+      ],
+      "heading_glyph_pixels": 398
+    },
+    {
+      "file": "UI-1280x720-Result.png",
+      "size": [
+        1280,
+        720
+      ],
+      "heading_glyph_pixels": 388
+    },
+    {
+      "file": "UI-1280x720-FinalChoice.png",
+      "size": [
+        1280,
+        720
+      ],
+      "heading_glyph_pixels": 396
+    },
+    {
+      "file": "UI-1280x720-SwapResult.png",
+      "size": [
+        1280,
+        720
+      ],
+      "heading_glyph_pixels": 388
+    }
+  ],
+  "limitations": [
+    "Interpretation using provisional dimensions; not a surveyed studio replica.",
+    "Table phone and red button are scenic props; decisions use HUD/keyboard.",
+    "Preferences persist across rounds in one launch, with no cross-launch game save."
+  ]
+}

@@ -1,54 +1,34 @@
-# Stage layout and iteration notes
+# Studio layout and scale
 
-## Coordinate convention
+The stage uses centimeters. +X is upstage toward the briefcase terraces and skyline; -X faces the downstage audience. +Y is the amount-board side, -Y is the Banker-suite side, and +Z is up.
 
-- `+X`: upstage, toward the model stairs and skyline.
-- `-X`: downstage, toward the primary audience bank and wide camera.
-- `+Y`: audience-view right, where the amount board sits.
-- `-Y`: audience-view left, where the elevated Banker booth sits.
-- `+Z`: height.
+## Spatial anchors
 
-The origin is near the central game platform. Measurements are centimeters.
+| Element | Location or envelope |
+| --- | --- |
+| Studio floor | 40 m deep x 31 m wide, extending under all seating |
+| Central dais | X=-1 m; 7.8 m x 5.8 m; top at 27 cm |
+| Glass game table | X=-1.4 m; 1.12 m x 1.78 m; top at 1.345 m |
+| Case terraces | X=2.85, 4.05, 5.25, 6.45 m; each 10.7 m wide |
+| Terrace tops | Z=0.55, 1.35, 2.15, 2.95 m |
+| Briefcases | 6+7+7+6 arrangement; 48 x 14 x 34 cm shells |
+| Case supports | Shelf top 91 cm above each terrace; no floating cases |
+| Arch | Center X about 7.9 m; radius 6.86 m |
+| Amount screen | Center X=4.35 m, Y=7.6 m; 4.3 m wide x 7.02 m high |
+| Banker suite | Center Y=-8.45 m; floor about 4.7 m, roof about 7.0 m |
+| Wide camera | X=-23.5 m, Z=10.5 m; FOV 69 degrees |
+| Board camera | Preserves the earlier approved transform and 80-degree FOV |
 
-## First-pass spatial anchors
+These dimensions are explicit design assumptions, not measurements of the real studio.
 
-| Element | Center / envelope | First-pass size |
-| --- | --- | --- |
-| Working stage shell | origin | 24 m wide × 18 m deep |
-| Central platform | X=-1 m | 7.8 m × 5.8 m |
-| Model staircase | X=2.8–6.5 m | 10.7 m wide, 4 tiers, top at 2.95 m |
-| Amount board | X=4.2 m, Y=7.6 m | 4 m wide × 7 m high |
-| Grand arch / skyline | X=8.2 m | 13 m clear arch span, peak about 6.8 m |
-| Banker booth | X=5.4 m, Y=-8.45 m | high booth floor around 4.7 m |
-| Primary wide camera | X=-23.5 m, Z=10.5 m | 69-degree field of view |
+## Construction
 
-## Why the modules are code-generated
+Ten independent runtime actors preserve the original module architecture. Nine separate static-mesh groups add the detailed world, dais, phone, terraces, arch/skyline, Banker suite, display housing, audience architecture and lighting hardware. Actor groups can be selected independently in Unreal; each mesh is editable in the supplied Blender source.
 
-The stage is assembled from named C++ actor modules using only engine-native
-primitive meshes. This makes the source diffable, deterministic, and easy to
-regenerate while the proportions are still changing. Art assets can replace any
-module later without changing the public interaction API or the master level.
+177 empty chairs use a shared instanced mesh: 105 downstage chairs and 72 chairs in two side banks. Side banks stop before the amount display to preserve visibility. There are no people or human stand-ins. Each case has a supported body, separate hinged lid and a selection strip. The buttons and receiver on the physical table are scenic props; gameplay decisions use the HUD or keyboard.
 
-## Known graybox limitations
+The Blender source uses right-handed coordinates. Unreal FBX conversion reflects Y, so authored world-space actors use a compensating (1,-1,1) scale. Runtime case and seat geometry is symmetric about local Y.
 
-- The central platform uses the engine cylinder primitive as a readable polygonal
-  placeholder; its exact edge count and decorative inlays are not final.
-- The visual direction intentionally contains no people or human stand-ins. All 26
-  briefcases float directly above their tier positions; the empty audience is represented
-  only by seat blocks.
-- Audience seats show representative density rather than all approximately 360
-  reported studio seats.
-- The skyline, arch cross-section, booth interior, railings, truss, floor graphics,
-  LED strips, and camera pedestals remain simplified.
-- The amount board values are present and stateful, but typography and tile spacing
-  are still placeholders.
+## Further art direction
 
-## Next iteration sequence
-
-1. Match camera perspective and major proportions against selected reference frames.
-2. Replace the arch, staircase fascia, amount board, and table with authored meshes.
-3. Establish the blue/black/chrome/glass material family and practical LED strips.
-4. Add 26 briefcase assets and model stand-in skeletal meshes.
-5. Implement the round state machine, Deal/No Deal controls, phone/Banker sequence,
-   amount elimination, lighting cues, camera cuts, and audience-response hooks.
-6. Add performance budgets, packaged-build validation, and source-control workflow.
+The editable set can be refined against additional reference frames, especially scenic skyline proportions, booth glazing and the exact stage ornament. Current geometry and materials provide an original, cohesive studio interpretation. There is no claim of survey accuracy or film-quality photorealism.
