@@ -4,6 +4,10 @@ An editable Unreal Engine 5.7 television studio and a complete playable briefcas
 
 ![Studio overview](StageOverview.png)
 
+## Play in your browser
+
+Open the [browser-native playable edition](https://junjienian.github.io/DealOrNoDeal/) on a desktop or phone. It recreates the complete 26-case game and four-camera studio using the original Blender set and sounds; no Unreal installation or Pixel Streaming server is needed. See the [web edition guide](web/README.md) for controls, source assets, local setup, and verification.
+
 ## Play
 
 Download the portable Windows game from [Release v0.4.2](https://github.com/JunjieNian/DealOrNoDeal/releases/tag/v0.4.2), extract the ZIP, and launch `Windows/DealOrNoDealStage.exe`.
