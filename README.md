@@ -6,7 +6,7 @@ An editable Unreal Engine 5.7 television studio and a complete playable briefcas
 
 ## Play in your browser
 
-Open the [browser-native playable edition](https://junjienian.github.io/DealOrNoDeal/) on a desktop or phone. It recreates the complete 26-case game and four-camera studio using the original Blender set and sounds; no Unreal installation or Pixel Streaming server is needed. See the [web edition guide](web/README.md) for controls, source assets, local setup, and verification.
+Open the [browser-native playable edition](https://junjienian.com/DealOrNoDeal/) on a desktop or phone. It recreates the complete 26-case game and four-camera studio using the original Blender set and sounds; no Unreal installation or Pixel Streaming server is needed. See the [web edition guide](web/README.md) for controls, source assets, local setup, and verification.
 
 ## Play
 
