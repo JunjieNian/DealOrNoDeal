@@ -148,6 +148,35 @@ button:disabled { cursor: not-allowed; }
 .selection-footer > span { color: #b7c9d7; font-size: 12px; }
 .selection-footer strong { color: #ffcf75; font-size: 17px; }
 .selection-footer .primary-button { min-width: 235px; }
+.case-camera {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(330px, 27vw, 410px);
+}
+.case-camera .stage-view, .case-camera .stage-overlay {
+  position: relative;
+  inset: auto;
+  min-width: 0;
+  height: 100%;
+}
+.case-camera .stage-overlay {
+  z-index: 1;
+  padding: 14px;
+  overflow-y: auto;
+  pointer-events: auto;
+  background: #0c1928;
+  border-left: 1px solid #375671;
+}
+.case-camera .selection-panel {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  padding: 18px;
+  box-shadow: none;
+}
+.case-camera .selection-panel h2 { font-size: 23px; }
+.case-camera .case-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.case-camera .selection-footer { display: block; }
+.case-camera .selection-footer .primary-button { width: 100%; min-width: 0; margin-top: 11px; }
 .board-camera .selection-panel {
   top: 5%;
   bottom: auto;
@@ -199,6 +228,7 @@ button:disabled { cursor: not-allowed; }
 .camera-button span { color: #ffd07c; font-weight: 800; margin-right: 4px; }
 .camera-button:hover, .tool-button:hover { color: #f5f8fb; background: #1e344c; }
 .camera-button.active { color: #fff; background: #243f58; border-color: #4b7592; }
+.language-button { min-width: 76px; color: #ffcf75; background: #253b4e; border-color: #8b704d; font-weight: 800; }
 .menu-button { color: #ffcf75; border-color: #8b704d; }
 
 .dashboard {
@@ -255,9 +285,12 @@ button:disabled { cursor: not-allowed; }
   .masthead-stats span { font-size: 11px; }
   .masthead-stats small { display: none; }
   .stage-section { display: flex; flex-direction: column; height: auto; min-height: 0; overflow: visible; }
-  .stage-view { position: relative; inset: auto; width: 100%; height: clamp(240px, 50vw, 440px); flex: none; }
-  .stage-overlay { position: relative; inset: auto; pointer-events: auto; padding: 12px; background: #0c1928; }
-  .game-panel, .welcome-panel, .selection-panel, .board-camera .selection-panel,
+  .stage-view, .case-camera .stage-view { position: relative; inset: auto; width: 100%; height: clamp(240px, 50vw, 440px); flex: none; }
+  .stage-overlay, .case-camera .stage-overlay {
+    position: relative; inset: auto; width: 100%; height: auto; overflow: visible;
+    pointer-events: auto; padding: 12px; background: #0c1928; border-left: 0;
+  }
+  .game-panel, .welcome-panel, .selection-panel, .case-camera .selection-panel, .board-camera .selection-panel,
   .reveal-panel, .call-panel, .offer-panel, .final-panel, .result-panel, .pause-panel {
     position: relative; top: auto; bottom: auto; left: auto; transform: none;
     width: 100%; max-height: none; margin: 0; padding: 22px;
@@ -265,11 +298,11 @@ button:disabled { cursor: not-allowed; }
   .game-panel h2 { font-size: 29px; }
   .welcome-panel h2 { font-size: 39px; }
   .offer-panel h2, .reveal-panel h2, .result-panel h2 { font-size: clamp(39px, 10vw, 62px); }
-  .selection-panel h2, .board-camera .selection-panel h2 { font-size: 22px; }
-  .case-grid, .board-camera .case-grid { grid-template-columns: repeat(7, 1fr); gap: 5px; }
+  .selection-panel h2, .case-camera .selection-panel h2, .board-camera .selection-panel h2 { font-size: 22px; }
+  .case-grid, .case-camera .case-grid, .board-camera .case-grid { grid-template-columns: repeat(7, 1fr); gap: 5px; }
   .case-button, .board-camera .case-button { min-height: 43px; }
-  .selection-footer, .board-camera .selection-footer { display: flex; align-items: center; }
-  .selection-footer .primary-button, .board-camera .selection-footer .primary-button { width: auto; min-width: 0; margin: 0; }
+  .selection-footer, .case-camera .selection-footer, .board-camera .selection-footer { display: flex; align-items: center; }
+  .selection-footer .primary-button, .case-camera .selection-footer .primary-button, .board-camera .selection-footer .primary-button { width: auto; min-width: 0; margin: 0; }
   .toolbar { padding: 9px 11px; }
   .camera-button, .tool-button { min-height: 37px; padding: 6px 8px; font-size: 11px; }
   .dashboard { grid-template-columns: 1fr; padding: 15px 12px 30px; gap: 12px; }
@@ -285,7 +318,7 @@ button:disabled { cursor: not-allowed; }
   .game-panel { padding: 18px; }
   .game-panel h2 { font-size: 25px; }
   .welcome-panel h2 { font-size: 34px; }
-  .case-grid, .board-camera .case-grid { grid-template-columns: repeat(6, 1fr); }
+  .case-grid, .case-camera .case-grid, .board-camera .case-grid { grid-template-columns: repeat(6, 1fr); }
   .selection-footer .primary-button { min-height: 41px; padding: 7px 11px; font-size: 11px; }
   .selection-footer strong { font-size: 13px; }
   .final-panel .panel-actions, .pause-panel .panel-actions { grid-template-columns: 1fr; }

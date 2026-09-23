@@ -16,9 +16,11 @@ Open the printed local URL. For a production check, use `npm run build` and `npm
 
 The controls match the desktop game: click a case to preview it, click again or use the confirm button to choose/open it; arrows and Enter also work. Use D / N for offers and the final keep/swap choice, 1–4 or C for cameras, Esc for pause, and M / T / A for sound, pacing, and automatic cameras. All decisions work on touch screens. There is no decision timer.
 
+The interface opens in English by default. The toolbar's **中文 / English** button switches languages without restarting the game or its timers; the URL records a Chinese selection as `?lang=zh` and preserves other parameters such as `?seed=12345`. Removing `lang` returns to the English default.
+
 The complete game has 26 cases, the original 26 prize values, nine rounds of `6, 5, 4, 3, 2, 1, 1, 1, 1` opens, an offer after each round, a two-step Deal confirmation, and a final keep/swap choice. The Banker uses the original remaining-value average, round multiplier, and dollar/$100 rounding. A `?seed=12345` query parameter fixes the shuffled prize assignment for reproducible demos; the normal URL makes a fresh random game on replay.
 
-The four browser cameras follow the Unreal camera positions, targets, and horizontal fields of view. Cam 4 keeps the selection controls on the left so the amount display stays visible. The 3D amount display, the accessible HTML amount board, and case lids update as play progresses. If WebGL is unavailable, the game remains fully playable with a still image behind the native controls.
+The four browser cameras follow the Unreal camera positions, targets, and horizontal fields of view. On desktop, Cam 3 puts case-selection controls in a separate right-side rail so the foreground cases remain visible. Cam 4 keeps the selection controls on the left so the amount display stays visible. On narrow/mobile screens, controls flow below the stage. The 3D amount-board heading follows the selected language; its values, the accessible HTML amount board, and case lids update as play progresses. If WebGL is unavailable, the game remains fully playable with a still image behind the native controls.
 
 ## Source assets and verification
 
@@ -28,7 +30,7 @@ The four browser cameras follow the Unreal camera positions, targets, and horizo
 blender -b ArtSource/DealStudio.blend --python web/scripts/export_scene.py
 ```
 
-The original cue sounds are copied from `../ArtSource/Audio/`. `npm test` runs the deterministic game-rule tests. `npm run test:browser` tests the built site at `http://127.0.0.1:4173/` using Chrome, including a complete nine-round game, early Deal, 3D loading, and touch layout; set `WEB_TEST_URL` and optionally `CHROME_PATH` for other locations. QA screenshots are saved to `../Saved/WebQA/` (ignored by Git).
+The original cue sounds are copied from `../ArtSource/Audio/`. `npm test` runs the deterministic game-rule tests. `npm run test:browser` tests the built site at `http://127.0.0.1:4173/` using Chrome, including bilingual state preservation, Cam 3 non-overlap, a complete nine-round game, early Deal, 3D loading, and touch layout; set `WEB_TEST_URL` and optionally `CHROME_PATH` for other locations. QA screenshots are saved to `../Saved/WebQA/` (ignored by Git).
 
 `GITHUB_PAGES=true npm run build` applies the `/DealOrNoDeal/` project-site base path. The Pages workflow in `../.github/workflows/deploy-web.yml` publishes only `web/dist/`, not the Unreal source or Windows binaries.
 

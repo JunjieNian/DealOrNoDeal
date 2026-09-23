@@ -70,6 +70,8 @@ export class StudioStage {
   private caseVisuals: CaseVisual[] = [];
   private amountVisuals: THREE.Mesh[] = [];
   private amountLabels: THREE.Mesh[] = [];
+  private amountHeading: THREE.Mesh | null = null;
+  private amountHeadingText = 'AMOUNTS';
   private hitboxes: THREE.Mesh[] = [];
   private raycaster = new THREE.Raycaster();
   private pointer = new THREE.Vector2();
@@ -210,9 +212,10 @@ export class StudioStage {
   }
 
   private addAmountBoard(): void {
-    const heading = makeTextPlane('AMOUNTS', 2.8, 0.40, '#fff2d3');
+    const heading = makeTextPlane(this.amountHeadingText, 2.8, 0.40, '#fff2d3');
     heading.position.set(3.89, 6.67, -8.95);
     this.set.add(heading);
+    this.amountHeading = heading;
     for (let index = 0; index < 26; index++) {
       const leftColumn = index < 13;
       const row = index % 13;
@@ -230,6 +233,16 @@ export class StudioStage {
       this.amountVisuals.push(tile);
       this.amountLabels.push(label);
     }
+  }
+
+  setBoardHeading(label: string): void {
+    if (label === this.amountHeadingText) return;
+    this.amountHeadingText = label;
+    if (!this.amountHeading) return;
+    const material = this.amountHeading.material as THREE.MeshBasicMaterial;
+    material.map?.dispose();
+    material.map = textTexture(label, '#fff2d3');
+    material.needsUpdate = true;
   }
 
   update(game: DealGame): void {
